@@ -1,0 +1,14 @@
+name: Build IPA
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo xcode-select -s /Applications/Xcode_15.4.app
+      - run: brew install xcodegen && xcodegen
+      - run: |
+          xcodebuild -project PiDrive.xcodeproj -scheme PiDrive -sdk iphoneos -configuration Release -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+          mkdir Payload && cp -R build/Build/Products/Release-iphoneos/PiDrive.app Payload/ && zip -qr PiDrive.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with: { name: PiDrive-ipa, path: PiDrive.ipa }
