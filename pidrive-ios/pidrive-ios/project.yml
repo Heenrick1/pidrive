@@ -1,0 +1,19 @@
+name: PiDrive
+options:
+  deploymentTarget: { iOS: "12.0" }
+targets:
+  PiDrive:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.example.pidrive
+      TARGETED_DEVICE_FAMILY: "1"
+      SWIFT_VERSION: "5.0"
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleDisplayName: PiDrive
+        UILaunchStoryboardName: LaunchScreen
+        UIBackgroundModes: [fetch]
+        NSAppTransportSecurity: { NSAllowsArbitraryLoads: true }
